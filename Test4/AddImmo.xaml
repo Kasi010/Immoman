@@ -5,62 +5,81 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test4"
         mc:Ignorable="d"
-        Title="Add" Height="Auto" Width="Auto">
+        Title="Immobilie anlegen" Height="Auto" Width="900">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="0">
-            <Label>Straße:</Label>
-            <TextBox Name="imostreet"/>
-            <Label>PLZ:</Label>
-            <TextBox Name="imoplz"/>
-            <Label>Hausnummer:</Label>
-            <TextBox Name="imohausnummer"/>
-            <Label>Ort:</Label>
-            <TextBox Name="imoort"/>
-            <Label>Wohnfläche (in m^2):</Label>
-            <TextBox Name="imowohnfläche"/>
-            <Label>Kaufpreis:</Label>
-            <TextBox Name="imokaufpreis"/>
-            <TextBlock x:Name="imotexausgabe"/>
-            <Label>Makler (in %):</Label>
-            <TextBox Name="imomaklersatz"/>
-            <Label>Notar (in %):</Label>
-            <TextBox Name="imonotarsatz"/>
+            <StackPanel Margin="10">
+                <TextBlock HorizontalAlignment="Center">Adresse der Immobilie</TextBlock>
+                <Label>Straße:</Label>
+                <TextBox Name="imostreet"/>
+                <Label>PLZ:</Label>
+                <TextBox Name="imoplz"/>
+                <Label>Hausnummer:</Label>
+                <TextBox Name="imohausnummer"/>
+                <Label>Ort:</Label>
+                <TextBox Name="imoort"/>
+                <Label>Wohnfläche (in m^2):</Label>
+                <TextBox Name="imowohnfläche"/>
+            </StackPanel>
+            <StackPanel Margin="10">
+                <TextBlock HorizontalAlignment="Center">Investitionsdaten der Immobilie</TextBlock>
+                <Label>Kaufpreis:</Label>
+                <TextBox Name="imokaufpreis"/>
+                <TextBlock x:Name="imotexausgabe"/>
+                <Label>Makler (in %):</Label>
+                <TextBox Name="imomaklersatz"/>
+                <Label>Notar (in %):</Label>
+                <TextBox Name="imonotarsatz"/>
+            </StackPanel>
         </StackPanel>
         <StackPanel Grid.Column="2">
-            <Label>Grundbuch Amt (in %):</Label>
-            <TextBox Name="imogrundbuchsatz"/>
-            <Label>Grunderwerbssteuer (in %):</Label>
-            <TextBox Name="imogrunderwerbssteuer"/>
-            <Label>Anfangsinvestitionen:</Label>
-            <TextBox Name="imoanfangsinvest"/>
-            <Label>Kaltmiete (pro m^2):</Label>
-            <TextBox Name="imokaltmiete"/>
-            <Label>Sonstiges:</Label>
-            <TextBox Name="imosonstiges"/>
-            <Label>Umlagefähige Bewirtschaftungskosten:</Label>
-            <TextBox Name="imobewirtschaftung"/>
-            <Label>Heizkosten:</Label>
-            <TextBox Name="imoheizkosten"/>
-            <Label>Wasser/Abwassser:</Label>
-            <TextBox Name="imowasserabwasser"/>
-            <Label>Hausgeld:</Label>
-            <TextBox Name="imohausgeld"/>
-            <Label>Eigene Instandhaltungsrücklage:</Label>
-            <TextBox Name="imoinstandhaltungsrück"/>
-            <Label>Darlehenssumme:</Label>
-            <TextBox Name="imodarlehen"/>
+            <StackPanel Margin="10">
+                <Label>Grundbuch Amt (in %):</Label>
+                <TextBox Name="imogrundbuchsatz"/>
+                <Label>Grunderwerbssteuer (in %):</Label>
+                <TextBox Name="imogrunderwerbssteuer"/>
+                <Label>Anfangsinvestitionen (in €):</Label>
+                <TextBox Name="imoanfangsinvest"/>
+            </StackPanel>
+            <StackPanel Margin="10">
+                <TextBlock HorizontalAlignment="Center">Mietdaten der Immobilie</TextBlock>
+                <Label>Kaltmiete (€ pro m^2):</Label>
+                <TextBox Name="imokaltmiete"/>
+                <Label>Sonstiges (in €):</Label>
+                <TextBox Name="imosonstiges"/>
+                <Label>Umlagefähige Bewirtschaftungskosten (in €):</Label>
+                <TextBox Name="imobewirtschaftung"/>
+                <Label>Heizkosten (in €):</Label>
+                <TextBox Name="imoheizkosten"/>
+                <Label>Wasser/Abwassser (€ pro Monat):</Label>
+                <TextBox Name="imowasserabwasser"/>
+            </StackPanel>
+            <StackPanel Margin="10">
+                <TextBlock HorizontalAlignment="Center">Umlagekostendaten der Immobilie</TextBlock>
+                <Label>Hausgeld (in €):</Label>
+                <TextBox Name="imohausgeld"/>
+                <Label>Eigene Instandhaltungsrücklage (in €):</Label>
+                <TextBox Name="imoinstandhaltungsrück"/>
+            </StackPanel>
         </StackPanel>
-        <Button Grid.Row="1" Grid.Column="0" Content="Hinzufügen..." Click="OnImoAdd" Width="80" Height="50"/>
-
-
+        <StackPanel Grid.Column="4">
+            <StackPanel Margin="10">
+                <TextBlock HorizontalAlignment="Center">Finanzdaten der Immobilie</TextBlock>
+                <Label>Darlehenssumme (in €):</Label>
+                <TextBox Name="imodarlehen"/>
+                <Button Content="Hinzufügen..." Click="OnImoAdd" Width="80" Height="50"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
