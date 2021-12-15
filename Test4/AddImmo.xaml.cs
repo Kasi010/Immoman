@@ -30,11 +30,13 @@ namespace Test4
         {
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
 
-            imotableAdd(cn_string);
-            //investcalcAdd(cn_string);
-            finanzcalcAdd(cn_string);
-            mietcalcAdd(cn_string);
-            umlagekostcalcAdd(cn_string);
+            imotableAdd(cn_string); //funktioniert
+            investcalcAdd(cn_string); //funktioniert
+            finanzcalcAdd(cn_string);   //funktioniert
+            mietcalcAdd(cn_string); //funktioniert
+            umlagekostcalcAdd(cn_string); //funktioniert
+
+            MessageBox.Show("Datensatz wurde erfolgreich angelegt");
            
         }
         private void imotableAdd(string cn_string)
@@ -88,7 +90,7 @@ namespace Test4
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"INSERT INTO dbo.Investcalc (Kaufpreis,Makler,Notar,Grundbuchamt,Grunderwerbsteuer,Anfangsinvestitionen,ImmobilienID) VALUES (@kaufpreis,@makler/100,@notar/100,@grundbuchamt/100,@grunderwerbssteuer/100,@anfangsinvest,@immoID);";
+                cmd.CommandText = "INSERT INTO dbo.Investcalc (Kaufpreis,Makler,Notar,Grundbuchamt,Grunderwerbsteuer,Anfangsinvestitionen,ImmobilienID) VALUES (@kaufpreis,@makler/100,@notar/100,@grundbuchamt/100,@grunderwerbssteuer/100,@anfangsinvest,@immoID);";
 
                 cmd.Parameters.Add("@kaufpreis", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@makler", SqlDbType.Decimal, 20);
@@ -151,7 +153,7 @@ namespace Test4
             string sonstiges = imosonstiges.Text.Trim();
             string umlgbewirtkosten = imobewirtschaftung.Text.Trim();
             string heizkosten = imoheizkosten.Text.Trim();
-            string wasser_abwasser = imowasserabwasser.Text.Trim();
+            string wasserabwasser = imowasserabwasser.Text.Trim();
 
             int immoID = Convert.ToInt32(ImmoMethods.GetLastEntry());
 
@@ -159,20 +161,20 @@ namespace Test4
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"INSERT INTO dbo.Mietcalc (Kaltmiete,SonstigeMietaufwendungen,UmlageBewirtschaftskosten,Heizkosten,WasserAbwasserKosten,ImmobilienID) VALUES (@kaltmiete,@sonstiges,@umlgbewirtkosten,@heizkosten,@wasser_abwasser,@immoID);";
+                cmd.CommandText = $"INSERT INTO dbo.Mietcalc (Kaltmiete,SonstigeMietaufwendungen,UmlageBewirtschaftskosten,Heizkosten,KostenWassAbwasser,ImmobilienID) VALUES (@kaltmiete,@sonstiges,@umlgbewirtkosten,@heizkosten,@wasserabwasser,@immoID);";
 
                 cmd.Parameters.Add("@kaltmiete", SqlDbType.Decimal, 10);
                 cmd.Parameters.Add("@sonstiges", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@umlgbewirtkosten", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@heizkosten", SqlDbType.Decimal, 10);
-                cmd.Parameters.Add("@wasser_abwasser", SqlDbType.Decimal, 10);
+                cmd.Parameters.Add("@wasserabwasser", SqlDbType.Decimal, 10);
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
 
                 cmd.Parameters["@kaltmiete"].Value = kaltmiete;
                 cmd.Parameters["@sonstiges"].Value = sonstiges;
                 cmd.Parameters["@umlgbewirtkosten"].Value = umlgbewirtkosten;
                 cmd.Parameters["@heizkosten"].Value = heizkosten;
-                cmd.Parameters["@wasser_abwasser"].Value = wasser_abwasser;
+                cmd.Parameters["@wasserabwasser"].Value = wasserabwasser;
 
                 cmd.Parameters["@immoID"].Value = immoID;
 
