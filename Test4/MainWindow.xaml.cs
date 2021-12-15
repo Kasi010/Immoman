@@ -29,10 +29,10 @@ namespace Test4
 
         private void ListBox_Loaded(object sender, RoutedEventArgs e)
         {
-            liste_laden();
+            Liste_laden();
         }
 
-        private void liste_laden()
+        private void Liste_laden()
         {
             string sSQL = "SELECT * FROM Immobilie";
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
@@ -47,14 +47,6 @@ namespace Test4
                 c.Open();
 
                 SqlDataReader r = cmd.ExecuteReader();
-
-                //List<string> columnhead = ImmoMethods.ColumnNames(r);
-
-                //for (int i = 0; i < columnhead.Count; i++)
-                //{
-                //    GridViewColumn viewColumn = new GridViewColumn();
-                //    viewColumn.Header = columnhead[i];
-                //}
 
                 while (r.Read())
                 {
