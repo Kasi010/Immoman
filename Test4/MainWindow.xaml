@@ -1,0 +1,48 @@
+﻿<Window x:Class="Test4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Test4"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Datei">
+                <MenuItem Header="Hinzufügen..."/>
+                <Separator/>
+            </MenuItem>
+            <MenuItem Header="Bearbeiten">
+                
+            </MenuItem>
+            <MenuItem Header="?">
+
+            </MenuItem>
+        </Menu>
+        <DockPanel Grid.Row="1">
+            <TextBlock Text="Immobilie hinzufügen:"/>
+            <Button Content="Hinzufügen..." Click="OnAdd" Margin="5"/>
+        </DockPanel>
+        <ListView Grid.Row="2" Name="lstImmo" Loaded="ListBox_Loaded" Margin="10">
+            <ListView.View>
+                <GridView x:Name="GridImo">
+                    <GridViewColumn x:Name="Col1" Header="ID" DisplayMemberBinding="{Binding ImmobilienID}"/>
+                    <GridViewColumn x:Name="Col2" Header="Straße" DisplayMemberBinding="{Binding Straße}"/>
+                    <GridViewColumn x:Name="Col3" Header="PLZ" DisplayMemberBinding="{Binding PLZ}"/>
+                    <GridViewColumn x:Name="Col4" Header="Hausnummer" DisplayMemberBinding="{Binding Hausnummer}"/>
+                    <GridViewColumn x:Name="Col5" Header="Ort" DisplayMemberBinding="{Binding Ort}"/>
+                    <GridViewColumn x:Name="Col6" Header="Wohnflaeche" DisplayMemberBinding="{Binding Wohnflaeche}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
