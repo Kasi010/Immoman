@@ -74,6 +74,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Details.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,6 +90,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Benutzer.cs" />
+    <Compile Include="DataClass\Financedata.cs" />
+    <Compile Include="DataClass\Investdata.cs" />
+    <Compile Include="DataClass\Mietdata.cs" />
+    <Compile Include="DataClass\Umlagekostdata.cs" />
+    <Compile Include="Details.xaml.cs">
+      <DependentUpon>Details.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Immobilie.cs" />
     <Compile Include="ImmoMannDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
