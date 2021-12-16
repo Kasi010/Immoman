@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Test4.DataClass;
 
 namespace Test4
 {
@@ -74,5 +75,20 @@ namespace Test4
             var window = new Add();
             window.Show();
         }
+
+        private void OnDouble(object sender, MouseButtonEventArgs e)
+        {
+            Immobilie immo = (Immobilie)lstImmo.SelectedItem;
+
+            int immoID = immo.ImmobilienID;
+
+            var window = new Details(immoID);
+
+            //MessageBox.Show(Convert.ToString(immoID));
+
+            window.Show();
+            
+        }
+ 
     }
 }
