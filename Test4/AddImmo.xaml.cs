@@ -121,6 +121,8 @@ namespace Test4
         {
             //Financcalc
             string darlehenssum = imodarlehen.Text.Trim();
+            string zinssatz = imozins.Text.Trim();
+            string tilgungssatz = imotilgung.Text.Trim();
 
             int immoID = Convert.ToInt32(ImmoMethods.GetLastEntry());
 
@@ -128,12 +130,16 @@ namespace Test4
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"INSERT INTO dbo.Financcalc (Darlehenssumme,ImmobilienID) VALUES (@darlehenssumme,@immoID);";
+                cmd.CommandText = $"INSERT INTO dbo.Financcalc (Darlehenssumme,Zinssatz,Tilgung,ImmobilienID) VALUES (@darlehenssumme,@zinssatz/100,@tilgungssatz/100,@immoID);";
 
                 cmd.Parameters.Add("@darlehenssumme", SqlDbType.Decimal, 20);
+                cmd.Parameters.Add("@zinssatz", SqlDbType.Decimal, 20);
+                cmd.Parameters.Add("@tilgungssatz", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
 
                 cmd.Parameters["@darlehenssumme"].Value = darlehenssum;
+                cmd.Parameters["@zinssatz"].Value = zinssatz;
+                cmd.Parameters["@tilgungssatz"].Value = tilgungssatz;
                 cmd.Parameters["@immoID"].Value = immoID;
 
 
@@ -150,7 +156,7 @@ namespace Test4
         {
             //Mietcalc
             string kaltmiete = imokaltmiete.Text.Trim();
-            string sonstiges = imosonstiges.Text.Trim();
+            string mietsonstiges = imomietsonstiges.Text.Trim();
             string umlgbewirtkosten = imobewirtschaftung.Text.Trim();
             string heizkosten = imoheizkosten.Text.Trim();
             string wasserabwasser = imowasserabwasser.Text.Trim();
@@ -161,17 +167,17 @@ namespace Test4
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"INSERT INTO dbo.Mietcalc (Kaltmiete,SonstigeMietaufwendungen,UmlageBewirtschaftskosten,Heizkosten,KostenWassAbwasser,ImmobilienID) VALUES (@kaltmiete,@sonstiges,@umlgbewirtkosten,@heizkosten,@wasserabwasser,@immoID);";
+                cmd.CommandText = $"INSERT INTO dbo.Mietcalc (Kaltmiete,SonstigeMietaufwendungen,UmlageBewirtschaftskosten,Heizkosten,KostenWassAbwasser,ImmobilienID) VALUES (@kaltmiete,@mietsonstiges,@umlgbewirtkosten,@heizkosten,@wasserabwasser,@immoID);";
 
                 cmd.Parameters.Add("@kaltmiete", SqlDbType.Decimal, 10);
-                cmd.Parameters.Add("@sonstiges", SqlDbType.Decimal, 20);
+                cmd.Parameters.Add("@mietsonstiges", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@umlgbewirtkosten", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@heizkosten", SqlDbType.Decimal, 10);
                 cmd.Parameters.Add("@wasserabwasser", SqlDbType.Decimal, 10);
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
 
                 cmd.Parameters["@kaltmiete"].Value = kaltmiete;
-                cmd.Parameters["@sonstiges"].Value = sonstiges;
+                cmd.Parameters["@mietsonstiges"].Value = mietsonstiges;
                 cmd.Parameters["@umlgbewirtkosten"].Value = umlgbewirtkosten;
                 cmd.Parameters["@heizkosten"].Value = heizkosten;
                 cmd.Parameters["@wasserabwasser"].Value = wasserabwasser;
@@ -192,6 +198,7 @@ namespace Test4
             //Umlagekostcalc
             string hausgeld = imohausgeld.Text.Trim();
             string instandgsrückl = imoinstandhaltungsrück.Text.Trim();
+            string sonsumlagekost = imosonsumlagekost.Text.Trim();
 
             int immoID = Convert.ToInt32(ImmoMethods.GetLastEntry());
 
@@ -199,14 +206,16 @@ namespace Test4
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"INSERT INTO dbo.Umlagekostcalc (HausgeldNichtUmlage,Eigeninstandhaltungsrücklage,ImmobilienID) VALUES (@hausgeld,@instandgsrückl,@immoID);";
+                cmd.CommandText = $"INSERT INTO dbo.Umlagekostcalc (HausgeldNichtUmlage,Eigeninstandhaltungsrücklage,SonstigeNichtumlagekosten,ImmobilienID) VALUES (@hausgeld,@instandgsrückl,@sonsumlagekost,@immoID);";
 
                 cmd.Parameters.Add("@hausgeld", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@instandgsrückl", SqlDbType.Decimal, 20);
+                cmd.Parameters.Add("@sonsumlagekost", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
 
                 cmd.Parameters["@hausgeld"].Value = hausgeld;
                 cmd.Parameters["@instandgsrückl"].Value = instandgsrückl;
+                cmd.Parameters["@sonsumlagekost"].Value = sonsumlagekost;
                 cmd.Parameters["@immoID"].Value = immoID;
 
 
