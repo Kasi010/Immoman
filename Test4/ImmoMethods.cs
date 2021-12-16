@@ -39,6 +39,24 @@ namespace Test4
 
             }
         }
+        public static object DataReadScalar(string sql_command)
+        {
+            string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
+            using (var c = new SqlConnection(cn_string))
+            {
+                SqlCommand cmd = c.CreateCommand();
+                cmd.CommandText = sql_command;
+
+                c.Open();
+
+                object r = cmd.ExecuteScalar();
+
+                c.Close();
+                return r;
+
+
+            }
+        }
         public static object GetLastEntry()
         {
             string sqlcommand = $"SELECT TOP 1 (ImmobilienID) FROM Immobilie ORDER BY ImmobilienID DESC;";
