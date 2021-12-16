@@ -56,8 +56,8 @@
                 <TextBlock HorizontalAlignment="Center">Mietdaten der Immobilie</TextBlock>
                 <Label>Kaltmiete (€ pro m^2):</Label>
                 <TextBox Name="imokaltmiete"/>
-                <Label>Sonstiges (in €):</Label>
-                <TextBox Name="imosonstiges"/>
+                <Label>Sonstigesn Mietaufwendungen (in €):</Label>
+                <TextBox Name="imomietsonstiges"/>
                 <Label>Umlagefähige Bewirtschaftungskosten (in €):</Label>
                 <TextBox Name="imobewirtschaftung"/>
                 <Label>Heizkosten (in €):</Label>
@@ -71,6 +71,8 @@
                 <TextBox Name="imohausgeld"/>
                 <Label>Eigene Instandhaltungsrücklage (in €):</Label>
                 <TextBox Name="imoinstandhaltungsrück"/>
+                <Label>Sonstige Umlagekosten (in €):</Label>
+                <TextBox Name="imosonsumlagekost"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Column="4">
@@ -78,6 +80,10 @@
                 <TextBlock HorizontalAlignment="Center">Finanzdaten der Immobilie</TextBlock>
                 <Label>Darlehenssumme (in €):</Label>
                 <TextBox Name="imodarlehen"/>
+                <Label>Zinssatz(in €):</Label>
+                <TextBox Name="imozins"/>
+                <Label>Tilgungsatz(in €):</Label>
+                <TextBox Name="imotilgung"/>
                 <Button Content="Hinzufügen..." Click="OnImoAdd" Width="80" Height="50"/>
             </StackPanel>
         </StackPanel>
