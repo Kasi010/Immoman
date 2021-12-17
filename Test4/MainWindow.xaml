@@ -25,6 +25,8 @@
         <DockPanel Grid.Row="1">
             <TextBlock Text="Immobilie hinzufügen:"/>
             <Button Content="Hinzufügen..." Click="OnAdd" Margin="5"/>
+            <TextBlock Text="Anzeigeliste aktualisieren:"/>
+            <Button Content="Aktualisieren..." Click="OnRefresh" Margin="5"/>
         </DockPanel>
         <ListView Grid.Row="2" Name="lstImmo" Loaded="ListView_Loaded" MouseDoubleClick="OnDouble" Margin="10">
             <ListView.View>
