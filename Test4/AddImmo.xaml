@@ -16,7 +16,6 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="0">
             <StackPanel Margin="10">
@@ -80,9 +79,9 @@
                 <TextBlock HorizontalAlignment="Center">Finanzdaten der Immobilie</TextBlock>
                 <Label>Darlehenssumme (in €):</Label>
                 <TextBox Name="imodarlehen"/>
-                <Label>Zinssatz(in €):</Label>
+                <Label>Zinssatz(in %):</Label>
                 <TextBox Name="imozins"/>
-                <Label>Tilgungsatz(in €):</Label>
+                <Label>Tilgungsatz(in %):</Label>
                 <TextBox Name="imotilgung"/>
                 <Button Content="Hinzufügen..." Click="OnImoAdd" Width="80" Height="50"/>
             </StackPanel>
