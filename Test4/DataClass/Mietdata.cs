@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Test4.DataClass
 {
+    //Datenklasse für die abgefragten Daten aus der Mietcalc-Tabelle
     public class Mietdata
     {
         public decimal Kaltmiete { get; set; }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Test4.DataClass
 {
+    //Datenklasse für die abgefragten Daten aus der Umlagekostcalc-Tabelle
     public class Umlagekostdata
     {
         public decimal HausgeldNichtUmlage { get; set; }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Test4.DataClass
 {
+    //Datenklasse für die abgefragten Daten aus der Financcalc-Tabelle
     public class Financedata
     {
         public decimal Darlehenssumme { get; set; }
