@@ -101,11 +101,13 @@ namespace Test4
             
         }
 
+        //Aktualisiert die Liste in der ListView zur Laufzeit
         private void OnRefresh(object sender, RoutedEventArgs e)
         {
             Liste_laden();
         }
 
+        ////Wird ausgelöst auf den Button 'Hinzufügen' im Menü 'Datei' und ruft ein neues Fenster 'AddImmo' auf
         private void OnAddmini(object sender, RoutedEventArgs e)
         {
             var window = new AddImmo();
