@@ -21,18 +21,12 @@
                 <MenuItem Header="Hinzufügen..."/>
                 <Separator/>
             </MenuItem>
-            <MenuItem Header="Bearbeiten">
-                
-            </MenuItem>
-            <MenuItem Header="?">
-
-            </MenuItem>
         </Menu>
         <DockPanel Grid.Row="1">
             <TextBlock Text="Immobilie hinzufügen:"/>
             <Button Content="Hinzufügen..." Click="OnAdd" Margin="5"/>
         </DockPanel>
-        <ListView Grid.Row="2" Name="lstImmo" Loaded="ListBox_Loaded" MouseDoubleClick="OnDouble" Margin="10">
+        <ListView Grid.Row="2" Name="lstImmo" Loaded="ListView_Loaded" MouseDoubleClick="OnDouble" Margin="10">
             <ListView.View>
                 <GridView x:Name="GridImo">
                     <GridViewColumn x:Name="Col1" Header="ID" DisplayMemberBinding="{Binding ImmobilienID}"/>
