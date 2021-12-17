@@ -90,6 +90,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Benutzer.cs" />
+    <Compile Include="DataClass\Cashflowdata.cs" />
     <Compile Include="DataClass\Financedata.cs" />
     <Compile Include="DataClass\Investdata.cs" />
     <Compile Include="DataClass\Mietdata.cs" />
