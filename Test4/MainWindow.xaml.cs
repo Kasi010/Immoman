@@ -100,6 +100,10 @@ namespace Test4
             window.Show();
             
         }
- 
+
+        private void OnRefresh(object sender, RoutedEventArgs e)
+        {
+            Liste_laden();
+        }
     }
 }
