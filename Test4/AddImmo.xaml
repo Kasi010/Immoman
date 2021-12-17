@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test4"
         mc:Ignorable="d"
-        Title="Immobilie anlegen" Height="Auto" Width="900">
-    <Grid Margin="20">
+        Title="Immobilie anlegen" Height="Auto" Width="900" Background="LightGray">
+    <Grid Margin="20" Background="LightGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
