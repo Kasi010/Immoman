@@ -56,11 +56,11 @@
                 <TextBlock HorizontalAlignment="Center">Mietdaten der Immobilie</TextBlock>
                 <Label>Kaltmiete (€ pro m^2):</Label>
                 <TextBox Name="imokaltmiete"/>
-                <Label>Sonstigesn Mietaufwendungen (in €):</Label>
+                <Label>Sonstige Mietaufwendungen (in €):</Label>
                 <TextBox Name="imomietsonstiges"/>
                 <Label>Umlagefähige Bewirtschaftungskosten (in €):</Label>
                 <TextBox Name="imobewirtschaftung"/>
-                <Label>Heizkosten (in €):</Label>
+                <Label>Heizkosten (€ pro Monat):</Label>
                 <TextBox Name="imoheizkosten"/>
                 <Label>Wasser/Abwassser (€ pro Monat):</Label>
                 <TextBox Name="imowasserabwasser"/>
