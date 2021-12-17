@@ -105,5 +105,11 @@ namespace Test4
         {
             Liste_laden();
         }
+
+        private void OnAddmini(object sender, RoutedEventArgs e)
+        {
+            var window = new AddImmo();
+            window.Show();
+        }
     }
 }
