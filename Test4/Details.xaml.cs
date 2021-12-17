@@ -22,21 +22,36 @@ namespace Test4
     /// </summary>
     public partial class Details : Window
     {
+        /*Fenster zur Darstellung der berechneten Ergebnisse. Wird auf Doppelklick auf das Element im MainWindow ausgelöst*/
+
+        //immoID wird per Kosntruktor aus dem MainWindow an dieses Fenster übergeben
         public Details(int immoID)
         {
             InitializeComponent();
             this.ImmoID = immoID;
             Investcompute(immoID);
+            Mietcompute(immoID);
+            Umlagekostcompute(immoID);
+            Financcompute(immoID);
+            DataSet(immoID);
+            Cashflowcompute(immoID);
         }
+
+        //Property zum Speichern der ImmoID aus der Immobilientabelle
         public int ImmoID { get; set; }
+
+        //Gibt den Wert für die Wohnfläche für die übergebene ImmoID zurück
         private decimal GetWohnflaeche(int immoID)
         {
+            //Connection-String
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
 
+            //Aufbau der verbindung
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
+                //SQL-Befehl
                 cmd.CommandText = $"SELECT Wohnflaeche FROM Immobilie WHERE ImmobilienID = @immoID; ";
 
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
@@ -54,15 +69,20 @@ namespace Test4
             }
 
         }
+
+        //Gibt den Wert für die Gesamtinvestition für die übergebene ImmoID zurück
         private decimal GetGesamtinvest(int immoID)
         {
+            //Connection-String
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
 
+            //Aufbau der Verbindung
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"SELECT Gesamtinvestition FROM Immobilie WHERE ImmobilienID = @immoID; ";
+                //SQL-Befehl
+                cmd.CommandText = $"SELECT Gesamtinvestition FROM dbo.Investcalc WHERE ImmobilienID = @immoID; ";
 
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
                 cmd.Parameters["@immoID"].Value = immoID;
@@ -78,17 +98,20 @@ namespace Test4
 
             }
         }
-        private void Investcompute(int immoID)
-        {
-            Investdata investdata = new Investdata();
 
+        //Gibt die Werte für die Ausgabe zurück und schreibt diese Daten in die Textboxen
+        private void DataSet(int immoID)
+        {
+            //Connection-String
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
 
+            //Aufbau der Verbindung
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"SELECT * FROM Investcalc WHERE ImmobilienID=@immoID;";
+                //SQL-Befehl
+                cmd.CommandText = $"SELECT Investcalc.Gesamtinvestition,Mietcalc.Nettokaltmiete, Mietcalc.Warmmiete, Mietcalc.GesamtWarmmiete FROM Investcalc INNER JOIN Mietcalc ON Investcalc.ImmobilienID = Mietcalc.ImmobilienID where Investcalc.ImmobilienID = @immoID AND Mietcalc.ImmobilienID = @immoID;";
 
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
                 cmd.Parameters["@immoID"].Value = immoID;
@@ -98,6 +121,75 @@ namespace Test4
 
                 SqlDataReader r = cmd.ExecuteReader();
 
+                //Schreiben der Daten in die Textboxen
+                while (r.Read())
+                {
+                    detailinvest.Text = r[0].ToString();
+                    detailnettokaltmiete.Text = r[1].ToString();
+                    detailwarmmiete.Text = r[2].ToString();
+                    detailgesamtwarmmiete.Text = r[3].ToString();
+                }
+
+                c.Close();
+
+            }
+
+            //Aufbau der Verbindung
+            using (var c = new SqlConnection(cn_string))
+            {
+                SqlCommand cmd = c.CreateCommand();
+
+                //SQL-Befehl
+                cmd.CommandText = $"Select Umlagekostcalc.GesamtUmlage, Financcalc.Kapitaldienst From Umlagekostcalc Inner Join Financcalc ON Umlagekostcalc.ImmobilienID = Financcalc.ImmobilienID where Umlagekostcalc.ImmobilienID = @immoID AND Financcalc.ImmobilienID = @immoID;";
+
+                cmd.Parameters.Add("@immoID", SqlDbType.Int);
+                cmd.Parameters["@immoID"].Value = immoID;
+
+
+                c.Open();
+
+                SqlDataReader r = cmd.ExecuteReader();
+
+                //Schreiben der Daten in die Textboxen
+                while (r.Read())
+                {
+                    detailumlagekost.Text = r[0].ToString();
+                    detailkapitaldienst.Text = r[1].ToString();
+                }
+
+                c.Close();
+
+            }
+
+
+
+        }
+
+        //Berechnet die Werte für die Investcalctabelle und schreibt diese in Investcalc
+        private void Investcompute(int immoID)
+        {
+            Investdata investdata = new Investdata();
+
+            //Connection-String
+            string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
+
+            //Aufbau der Verbindung
+            using (var c = new SqlConnection(cn_string))
+            {
+                SqlCommand cmd = c.CreateCommand();
+
+                //SQL-Befehl
+                cmd.CommandText = $"SELECT * FROM dbo.Investcalc WHERE ImmobilienID=@immoID;";
+
+                cmd.Parameters.Add("@immoID", SqlDbType.Int);
+                cmd.Parameters["@immoID"].Value = immoID;
+
+
+                c.Open();
+
+                SqlDataReader r = cmd.ExecuteReader();
+
+                //Zuweisen der Werte in die Datenklasse Investdata
                 while (r.Read())
                 {
                     investdata.Kaufpreis = Convert.ToDecimal(r[1]);
@@ -112,6 +204,8 @@ namespace Test4
 
             }
 
+
+            //Berechnung der Werte für die Kaufpreiskalkulation
             decimal gesamtwohnfl = GetWohnflaeche(immoID);
 
             decimal flächekaufpreis = investdata.Kaufpreis / gesamtwohnfl;
@@ -124,11 +218,13 @@ namespace Test4
 
             decimal summeGesamtinvest = summeKaufpreis + investdata.Anfangsinvestitionen;
 
+
+            //Schreiben der Werte in die Tabelle Investcalc
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"UPDATE Investcalc SET Maklerbetrag=@maklerbetrag, Notarbetrag=@notarbetrag, Grundbuchbetrag=@grundbuch, Grunderwerbetrag=@grunderwerb, SummeKaufpreis=@summekaufpreis, Gesamtinvestition=@gesamtinvestition WHERE ImmobilienID=@immoID;";
+                cmd.CommandText = $"UPDATE dbo.Investcalc SET Maklerbetrag=@maklerbetrag, Notarbetrag=@notarbetrag, Grundbuchbetrag=@grundbuch, Grunderwerbetrag=@grunderwerb, SummeKaufpreis=@summekaufpreis, Gesamtinvestition=@gesamtinvestition WHERE ImmobilienID=@immoID;";
 
                 cmd.Parameters.Add("@maklerbetrag", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@notarbetrag", SqlDbType.Decimal, 20);
@@ -155,24 +251,22 @@ namespace Test4
 
             }
 
-            //Ausgabe hinzufügen
-
-
-
-
-
         }
+
+        //Berechnet die Werte für die Mietcalctabelle und schreibt diese in Miettcalc
         private void Mietcompute(int immoID)
         {
             Mietdata mietdata = new Mietdata();
 
+            //Connection-String
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
 
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"SELECT * FROM Mietcalc WHERE ImmobilienID=@immoID;";
+                //SQL-Befehl
+                cmd.CommandText = $"SELECT * FROM dbo.Mietcalc WHERE ImmobilienID=@immoID;";
 
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
                 cmd.Parameters["@immoID"].Value = immoID;
@@ -182,6 +276,7 @@ namespace Test4
 
                 SqlDataReader r = cmd.ExecuteReader();
 
+                //Zuweisen der Werte in die Datenklasse Mietdata
                 while (r.Read())
                 {
                     mietdata.Kaltmiete = Convert.ToDecimal(r[1]);
@@ -194,18 +289,21 @@ namespace Test4
                 c.Close();
             }
 
+            //Holen der Wohnfläche
             decimal gesamtwohnfl = GetWohnflaeche(immoID);
 
-            decimal gesamKaltmiete = mietdata.Kaltmiete * gesamtwohnfl;
-            decimal nettokaltmiete = gesamKaltmiete + mietdata.SonstigeMietaufwendungen;
+            //Berechnung der Werte für die Mieteinnahmenkalkulation
+            decimal gesamWohnKaltmiete = mietdata.Kaltmiete * gesamtwohnfl;
+            decimal nettokaltmiete = gesamWohnKaltmiete + mietdata.SonstigeMietaufwendungen;
             decimal warmmiete = nettokaltmiete + mietdata.UmlageBewirtschaftskosten;
-            decimal warmieteinclnebenkosten = mietdata.Heizkosten + mietdata.KostenWassAbwasser;
+            decimal warmieteinclnebenkosten = warmmiete+mietdata.Heizkosten + mietdata.KostenWassAbwasser;
 
+            //Schreiben der Werte in die Tabelle Mietcalc
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"UPDATE Mietcalc SET KaltmieteGesamt=@gesamtKaltmiete, Nettokaltmiete=@nettokaltmiete, Warmmiete=@warmmiete, GesamtWarmmiete=@gesamtwarmmiete WHERE ImmobilienID=@immoID;";
+                cmd.CommandText = $"UPDATE dbo.Mietcalc SET KaltmieteGesamt=@gesamtKaltmiete, Nettokaltmiete=@nettokaltmiete, Warmmiete=@warmmiete, GesamtWarmmiete=@gesamtwarmmiete WHERE ImmobilienID=@immoID;";
 
                 
                 cmd.Parameters.Add("@gesamtKaltmiete", SqlDbType.Decimal, 20);
@@ -214,7 +312,7 @@ namespace Test4
                 cmd.Parameters.Add("@gesamtwarmmiete", SqlDbType.Decimal, 20);
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
 
-                cmd.Parameters["@gesamtKaltmiete"].Value = gesamKaltmiete;
+                cmd.Parameters["@gesamtKaltmiete"].Value = gesamWohnKaltmiete;
                 cmd.Parameters["@nettokaltmiete"].Value = nettokaltmiete;
                 cmd.Parameters["@warmmiete"].Value = warmmiete;
                 cmd.Parameters["@gesamtwarmmiete"].Value = warmieteinclnebenkosten;
@@ -229,22 +327,23 @@ namespace Test4
 
             }
 
-            //Ausgabe bauen
-
-
-
         }
+
+        //Berechnet die Werte für die Umlagekosttabelle und schreibt diese in Umlagekostcalc
         private void Umlagekostcompute(int immoID)
         {
             Umlagekostdata umlagekostdata = new Umlagekostdata();
 
+            //Connection-String
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
 
+            //Aufbau der Verbindung
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"SELECT * FROM Umlagekostcalc WHERE ImmobilienID=@immoID;";
+                //SQL-Befehl
+                cmd.CommandText = $"SELECT * FROM dbo.Umlagekostcalc WHERE ImmobilienID=@immoID;";
 
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
                 cmd.Parameters["@immoID"].Value = immoID;
@@ -254,6 +353,7 @@ namespace Test4
 
                 SqlDataReader r = cmd.ExecuteReader();
 
+                //Zuweisen der Werte in die Datenklasse Umlagekostdata
                 while (r.Read())
                 {
                     umlagekostdata.HausgeldNichtUmlage = Convert.ToDecimal(r[1]);
@@ -265,13 +365,16 @@ namespace Test4
 
             }
 
+            //Berechnung der Werte
             decimal summeUmlagekost = umlagekostdata.HausgeldNichtUmlage + umlagekostdata.Eigeninstandhaltungsrücklage + umlagekostdata.SonstigeNichtumlagekosten;
 
+
+            //Schreiben der Werte in die Tabelle Umlagekostcalc
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"UPDATE Mietcalc SET GesasmtUmlagekost=@summeUmlagekost WHERE ImmobilienID=@immoID;";
+                cmd.CommandText = $"UPDATE dbo.Umlagekostcalc SET GesamtUmlage = @summeUmlagekost WHERE ImmobilienID=@immoID;";
 
 
                 cmd.Parameters.Add("@summeUmlagekost", SqlDbType.Decimal, 20);
@@ -289,21 +392,23 @@ namespace Test4
 
             }
 
-            //Ausgabe holen
-
-
         }
+
+        //Berechnet die Werte für die Financtabelle und schreibt diese in Financcalc
         private void Financcompute(int immoID)
         {
             Financedata financedata = new Financedata();
 
+            //Connection-String
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
 
+            //Aufbau der Verbindung
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"SELECT * FROM Financcalc WHERE ImmobilienID=@immoID;";
+                //SQL-Befehl
+                cmd.CommandText = $"SELECT * FROM dbo.Financcalc WHERE ImmobilienID=@immoID;";
 
                 cmd.Parameters.Add("@immoID", SqlDbType.Int);
                 cmd.Parameters["@immoID"].Value = immoID;
@@ -313,6 +418,7 @@ namespace Test4
 
                 SqlDataReader r = cmd.ExecuteReader();
 
+                //Zuweisen der Werte in die Datenklasse Financedata
                 while (r.Read())
                 {
                     financedata.Darlehenssumme = Convert.ToDecimal(r[1]);
@@ -324,18 +430,22 @@ namespace Test4
 
             }
 
+            //Holen des Wertes der Gesamtinvestition
             decimal gesamtinvest = GetGesamtinvest(immoID);
 
+            //Berechnung der Werte
             decimal eigenkapital = gesamtinvest - financedata.Darlehenssumme;
             decimal zinsbetrag = financedata.Darlehenssumme * financedata.Zinssatz;
             decimal tilgungsbetrag = financedata.Darlehenssumme * financedata.Tilgung;
             decimal kapitaldienst = (zinsbetrag + tilgungsbetrag) / 12;
 
+            //Schreiben der Werte in die Tabelle Financcalc
             using (var c = new SqlConnection(cn_string))
             {
                 SqlCommand cmd = c.CreateCommand();
 
-                cmd.CommandText = $"UPDATE Financcalc SET Zinsbetrag=@zinsbetrag, Tilgungsbetrag=@tilgungsbetrag, Kapitaldienst=@kapitaldienst WHERE ImmobilienID=@immoID;";
+                //SQL-Befehl
+                cmd.CommandText = $"UPDATE dbo.Financcalc SET Zinsbetrag=@zinsbetrag, Tilgungsbetrag=@tilgungsbetrag, Kapitaldienst=@kapitaldienst WHERE ImmobilienID=@immoID;";
 
 
                 cmd.Parameters.Add("@zinsbetrag", SqlDbType.Decimal, 20);
@@ -356,12 +466,49 @@ namespace Test4
                 c.Close();
 
             }
+        }
 
-            //Ausgabe bauen
+        //Berechnet die Werte für den Cashflow und schreibt diese in die Textbox
+        private void Cashflowcompute(int immoID)
+        {
+            Cashflowdata cashflowdata = new Cashflowdata();
+
+            //Connection-String
+            string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
+           
+            //Aufbau der Verbindung
+            using (var c = new SqlConnection(cn_string))
+            {
+                SqlCommand cmd = c.CreateCommand();
+
+                //SQL-Befehl
+                cmd.CommandText = $"SELECT Mietcalc.Warmmiete,Mietcalc.UmlageBewirtschaftskosten,Financcalc.Kapitaldienst FROM Mietcalc INNER JOIN Financcalc ON Mietcalc.ImmobilienID = Financcalc.ImmobilienID WHERE Financcalc.ImmobilienID = @immoID AND Mietcalc.ImmobilienID = @immoID;";
+
+                cmd.Parameters.Add("@immoID", SqlDbType.Int);
+                cmd.Parameters["@immoID"].Value = immoID;
 
 
+                c.Open();
 
+                SqlDataReader r = cmd.ExecuteReader();
 
+                //Zuweisung der Daten in die Klasse Cashflowdata
+                while (r.Read())
+                {
+                    cashflowdata.Warmmiete = Convert.ToDecimal(r[0]);
+                    cashflowdata.Bewirtschaftungskosten = Convert.ToDecimal(r[1]);
+                    cashflowdata.Kapitaldienst =  Convert.ToDecimal(r[2]);
+                }
+
+                c.Close();
+
+                //Berechnung des Wertes
+                decimal operCashflow = cashflowdata.Warmmiete - cashflowdata.Bewirtschaftungskosten - cashflowdata.Kapitaldienst;
+
+                //Schreiben des Wertes in die Textbox
+                detailoperativcashflow.Text = operCashflow.ToString();
+
+            }
 
         }
     }
