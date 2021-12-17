@@ -107,7 +107,7 @@ namespace Test4
             Liste_laden();
         }
 
-        ////Wird ausgelöst auf den Button 'Hinzufügen' im Menü 'Datei' und ruft ein neues Fenster 'AddImmo' auf
+        //Wird ausgelöst auf den Button 'Hinzufügen' im Menü 'Datei' und ruft ein neues Fenster 'AddImmo' auf
         private void OnAddmini(object sender, RoutedEventArgs e)
         {
             var window = new AddImmo();
