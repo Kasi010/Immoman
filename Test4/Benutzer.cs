@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Test4
 {
+    /*Datenklasse fürs speichern der Daten von Benutzer, Feature wurde nicht umgesetzt*/
     public class Benutzer
     {
         public int BenutzerID { get; set; }

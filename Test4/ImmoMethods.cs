@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Test4
 {
+    //Methoden zur Verwendung innerhalb des Codes. Nur Get-LastEntry wird verwendet
     public class ImmoMethods
     {
+        //Holt Spaltennamen der ausgelesenen Tabelle
         public static List<string> ColumnNames(SqlDataReader r)
         {
             List<string> names = new List<string>();
@@ -21,6 +23,8 @@ namespace Test4
 
             return names;
         }
+
+        //Liest Werte aus und gibt diese zurück. Funktioniert nicht
         public static SqlDataReader DataRead(string sql_command)
         {
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
@@ -39,6 +43,8 @@ namespace Test4
 
             }
         }
+
+        //Liest einen Wert und gibt diesen zurück. Funktioniert nicht
         public static object DataReadScalar(string sql_command)
         {
             string cn_string = "Server=localhost;Database=Immoman;Trusted_Connection=true;";
@@ -57,6 +63,8 @@ namespace Test4
 
             }
         }
+
+        //Holt den Wert der ImmobilienID der zuletzt hinzugefügten Immobilie
         public static object GetLastEntry()
         {
             string sqlcommand = $"SELECT TOP 1 (ImmobilienID) FROM Immobilie ORDER BY ImmobilienID DESC;";

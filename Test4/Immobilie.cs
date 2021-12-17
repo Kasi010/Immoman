@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Test4
 {
+    //Datenklasse für die abgefragten Daten aus der Immobilien-Tabelle
     public class Immobilie
     {
         public int ImmobilienID { get; set; }
