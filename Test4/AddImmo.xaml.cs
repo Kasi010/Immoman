@@ -19,10 +19,10 @@ namespace Test4
     /// <summary>
     /// Interaktionslogik für Add.xaml
     /// </summary>
-    public partial class Add : Window
+    public partial class AddImmo : Window
     {
         /*Fenster zur Dateneingabe von einer Immobilie. Die Daten werden anschließend auf den SQL-Server geschrieben*/
-        public Add()
+        public AddImmo()
         {
             InitializeComponent();
         }

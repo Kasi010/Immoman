@@ -80,7 +80,7 @@ namespace Test4
         //Wird ausgelöst auf den Button 'Hinzufügen' und ruft ein neues Fenster 'AddImmo' auf
         private void OnAdd(object sender, RoutedEventArgs e)
         {
-            var window = new Add();
+            var window = new AddImmo();
             window.Show();
         }
 
