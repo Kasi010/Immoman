@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="LightGray">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="Datei">
-                <MenuItem Header="Hinzufügen..."/>
+                <MenuItem Header="Hinzufügen..." Click="OnAddmini"/>
                 <Separator/>
             </MenuItem>
         </Menu>
