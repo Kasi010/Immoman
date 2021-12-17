@@ -6,12 +6,27 @@
         xmlns:local="clr-namespace:Test4"
         mc:Ignorable="d"
         Title="Details" Height="450" Width="800">
-    <Grid>
-        <ListBox Name="lstdetails">
-            <TextBlock Text="{Binding Kaufpreis}"/>
-            <TextBlock Text="{Binding Makler}"/>
-            <TextBlock Text="{Binding Notar}"/>
-        </ListBox>
-        
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin="10">
+            <Label>Summe Gesamtinvestitionen:</Label>
+            <TextBlock Name="detailinvest" Background="White"/>
+            <Label>Nettokaltmiete:</Label>
+            <TextBlock Name="detailnettokaltmiete" Background="White"/>
+            <Label>Warmmiete:</Label>
+            <TextBlock Name="detailwarmmiete" Background="White"/>
+            <Label>Warmmiete inkl. Nebenkosten:</Label>
+            <TextBlock Name="detailgesamtwarmmiete" Background="White"/>
+            <Label>Nicht umlagefähige Kosten:</Label>
+            <TextBlock Name="detailumlagekost" Background="White"/>
+            <Label>Kapitaldienst pro Mon.:</Label>
+            <TextBlock Name="detailkapitaldienst" Background="White"/>
+            <Label>Operativer Cashflow:</Label>
+            <TextBlock Name="detailoperativcashflow" Background="White"/>
+        </StackPanel>
     </Grid>
 </Window>
